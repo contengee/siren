@@ -1,0 +1,50 @@
+class Room {
+    constructor(public x: number, public y: number, public width: number, public height: number) { }
+}
+
+class Map {
+    private map: number[][] = Array(30).fill(0).map(() => Array(30).fill(0));
+
+    constructor(private roomCount: number) {
+        this.generateRooms();
+        this.connectRooms();
+        this.fillBlocks();
+    }
+
+    private generateRooms(): void {
+        for (let i = 0; i < this.roomCount; i++) {
+            const roomWidth = Math.floor(Math.random() * 4) + 2;
+            const roomHeight = Math.floor(Math.random() * 4) + 2;
+            const roomX = Math.floor(Math.random() * (30 - roomWidth));
+            const roomY = Math.floor(Math.random() * (30 - roomHeight));
+
+            for (let y = roomY; y < roomY + roomHeight; y++) {
+                for (let x = roomX; x < roomX + roomWidth; x++) {
+                    this.map[y][x] = 1;
+                }
+            }
+        }
+    }
+
+    private connectRooms(): void {
+        // Add logic to connect rooms here
+        // ...
+    }
+
+    private fillBlocks(): void {
+        for (let y = 0; y < 30; y++) {
+            for (let x = 0; x < 30; x++) {
+                if (this.map[y][x] === 0) {
+                    this.map[y][x] = 0;
+                }
+            }
+        }
+    }
+
+    getMap(): number[][] {
+        return this.map;
+    }
+}
+このロジックにより、ランダムな大きさと位置に部屋が配置されます。接続ロジックは省略していますが、これは通常、最初に選択された部屋から最も近い部屋にパスを作り、その部屋からまた最も近い未接続の部屋にパスを作る、という方法で実装されます。
+
+なお、このロジックでは部屋が他の部屋と重なる可能性があります。これを防ぐためには、部屋生成時に他の部屋との間に一定の距離があることを確認する必要があります。
